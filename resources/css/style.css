@@ -1,0 +1,631 @@
+/*
+ * =============================================================================
+ * Smart Task Manager - Design System (style.css)
+ * =============================================================================
+ * Centralized stylesheet. Every screen and component pulls from this file so
+ * that a future redesign only requires editing one place. JavaFX CSS does not
+ * support CSS custom properties (var(--name)) the same way browsers do, but
+ * it does support "looked-up colors" via -fx-something definitions on .root.
+ * We use that mechanism here to expose a real palette/token system.
+ * =============================================================================
+ */
+
+/* ---------------- Color tokens & global root ---------------- */
+.root {
+    /* Design System v1 — premium dark SaaS palette (Linear / Arc inspired). */
+    -bg-base:        #020617;
+    -bg-surface:     #0F172A;
+    -bg-card:        #1E293B;
+    -bg-card-hover:  #243049;
+    -accent-primary: #3B82F6;
+    -accent-success: #22C55E;
+    -accent-warning: #F59E0B;
+    -accent-danger:  #EF4444;
+    -accent-intel:   #8B5CF6;
+    -text-primary:   #F8FAFC;
+    -text-secondary: #94A3B8;
+    -text-muted:     #64748B;
+    -border-soft:    #233149;
+
+    -fx-background-color: -bg-base;
+    -fx-font-family: "Segoe UI", "Inter", "Helvetica", "Arial", sans-serif;
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: -text-primary;
+}
+
+/* ---------------- Typography scale ---------------- */
+.text-display    { -fx-font-size: 32px; -fx-font-weight: bold;   -fx-text-fill: -text-primary; }
+.text-title      { -fx-font-size: 22px; -fx-font-weight: bold;   -fx-text-fill: -text-primary; }
+.text-subtitle   { -fx-font-size: 16px; -fx-font-weight: normal; -fx-text-fill: -text-secondary; }
+.text-body       { -fx-font-size: 14px;                          -fx-text-fill: -text-primary; }
+.text-muted      { -fx-font-size: 13px;                          -fx-text-fill: -text-secondary; }
+.text-tiny       { -fx-font-size: 11px;                          -fx-text-fill: -text-muted; }
+.text-kpi-value  { -fx-font-size: 28px; -fx-font-weight: bold;   -fx-text-fill: -text-primary; }
+.text-accent     { -fx-text-fill: -accent-primary; }
+.text-success    { -fx-text-fill: -accent-success; }
+.text-warning    { -fx-text-fill: -accent-warning; }
+.text-danger     { -fx-text-fill: -accent-danger;  }
+.text-intel      { -fx-text-fill: -accent-intel;   }
+
+/* ---------------- Layout shells ---------------- */
+.main-layout {
+    -fx-background-color: -bg-base;
+}
+.content-area {
+    -fx-background-color: -bg-base;
+    -fx-padding: 24;
+}
+.section-spacer { -fx-pref-height: 16; }
+
+/* ---------------- Sidebar ---------------- */
+.sidebar {
+    -fx-background-color: -bg-surface;
+    -fx-padding: 20 12 20 12;
+    -fx-pref-width: 240;
+    -fx-spacing: 6;
+}
+.sidebar-logo {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+    -fx-padding: 0 0 20 8;
+}
+.sidebar-section-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: -text-muted;
+    -fx-padding: 16 0 4 8;
+}
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-secondary;
+    -fx-padding: 10 12 10 12;
+    -fx-background-radius: 8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+.sidebar-item:hover {
+    -fx-background-color: -bg-card;
+    -fx-text-fill: -text-primary;
+}
+.sidebar-item-active {
+    -fx-background-color: derive(-accent-primary, -55%);
+    -fx-text-fill: -accent-primary;
+    -fx-font-weight: bold;
+}
+
+/* ---------------- TopBar ---------------- */
+.topbar {
+    -fx-background-color: -bg-surface;
+    -fx-padding: 14 24 14 24;
+    -fx-spacing: 12;
+    -fx-border-color: transparent transparent -border-soft transparent;
+    -fx-border-width: 0 0 1 0;
+}
+.topbar-greeting { -fx-font-size: 15px; -fx-text-fill: -text-primary; -fx-font-weight: bold; }
+.topbar-time     { -fx-font-size: 13px; -fx-text-fill: -text-secondary; }
+.topbar-streak   { -fx-font-size: 12px; -fx-text-fill: -accent-warning; -fx-padding: 4 10 4 10;
+                   -fx-background-color: derive(-accent-warning, -70%); -fx-background-radius: 12; }
+
+/* ---------------- Cards ---------------- */
+.card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-padding: 18;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+.card-elevated {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 12;
+    -fx-padding: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 8, 0, 0, 2);
+}
+
+/* KPI cards */
+.kpi-card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-padding: 18;
+    -fx-spacing: 8;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-min-width: 180;
+}
+.kpi-card:hover { -fx-border-color: -accent-primary; }
+.kpi-label  { -fx-font-size: 12px; -fx-text-fill: -text-secondary; }
+.kpi-value  { -fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.kpi-delta  { -fx-font-size: 11px; -fx-text-fill: -accent-success; }
+
+/* Task cards */
+.task-card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 10;
+    -fx-padding: 14;
+    -fx-spacing: 6;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-cursor: hand;
+}
+.task-card:hover { -fx-background-color: -bg-card-hover; -fx-border-color: -accent-primary; }
+.task-title  { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.task-meta   { -fx-font-size: 12px; -fx-text-fill: -text-secondary; }
+
+/* Recommendation card */
+.recommendation-card {
+    -fx-background-color: derive(-accent-intel, -60%);
+    -fx-background-radius: 14;
+    -fx-padding: 22;
+    -fx-spacing: 8;
+    -fx-border-color: -accent-intel;
+    -fx-border-width: 1;
+    -fx-border-radius: 14;
+}
+.recommendation-label { -fx-font-size: 11px; -fx-text-fill: -accent-intel; -fx-font-weight: bold; }
+.recommendation-title { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.recommendation-reason{ -fx-font-size: 13px; -fx-text-fill: -text-secondary; }
+
+/* Progress card */
+.progress-card { -fx-background-color: -bg-surface; -fx-background-radius: 12; -fx-padding: 16; -fx-spacing: 8; }
+.progress-bar > .track { -fx-background-color: -bg-card; -fx-background-radius: 6; }
+.progress-bar > .bar   { -fx-background-color: -accent-primary; -fx-background-radius: 6; }
+
+/* Chart placeholder */
+.chart-placeholder {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-padding: 18;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-min-height: 220;
+}
+.chart-placeholder-label { -fx-text-fill: -text-secondary; -fx-font-size: 13px; }
+
+/* ---------------- Tags / chips ---------------- */
+.tag {
+    -fx-padding: 3 9 3 9;
+    -fx-background-radius: 10;
+    -fx-font-size: 11px;
+}
+.tag-primary { -fx-background-color: derive(-accent-primary, -55%); -fx-text-fill: -accent-primary; }
+.tag-success { -fx-background-color: derive(-accent-success, -55%); -fx-text-fill: -accent-success; }
+.tag-warning { -fx-background-color: derive(-accent-warning, -55%); -fx-text-fill: -accent-warning; }
+.tag-danger  { -fx-background-color: derive(-accent-danger,  -55%); -fx-text-fill: -accent-danger;  }
+.tag-intel   { -fx-background-color: derive(-accent-intel,   -55%); -fx-text-fill: -accent-intel;   }
+.tag-muted   { -fx-background-color: -bg-card; -fx-text-fill: -text-secondary; }
+
+/* ---------------- Buttons ---------------- */
+.btn {
+    -fx-background-color: -bg-card;
+    -fx-text-fill: -text-primary;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+}
+.btn:hover { -fx-background-color: -bg-card-hover; }
+.btn-primary { -fx-background-color: -accent-primary; -fx-text-fill: white; -fx-font-weight: bold; }
+.btn-primary:hover { -fx-background-color: derive(-accent-primary, -10%); }
+.btn-success { -fx-background-color: -accent-success; -fx-text-fill: white; -fx-font-weight: bold; }
+.btn-warning { -fx-background-color: -accent-warning; -fx-text-fill: #1F2937; -fx-font-weight: bold; }
+.btn-danger  { -fx-background-color: -accent-danger;  -fx-text-fill: white; }
+.btn-ghost   { -fx-background-color: transparent; -fx-text-fill: -text-secondary; -fx-border-color: -border-soft; -fx-border-radius: 8; -fx-border-width: 1; }
+.btn-ghost:hover { -fx-border-color: -accent-primary; -fx-text-fill: -text-primary; }
+.btn-icon    { -fx-padding: 6 10 6 10; -fx-font-size: 12px; }
+
+/* ---------------- Form fields ---------------- */
+.text-field, .password-field, .text-area, .combo-box-base, .date-picker > .text-field {
+    -fx-background-color: -bg-surface;
+    -fx-text-fill: -text-primary;
+    -fx-prompt-text-fill: -text-muted;
+    -fx-background-radius: 8;
+    -fx-border-color: -border-soft;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+    -fx-font-size: 13px;
+}
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box-base:focused {
+    -fx-border-color: -accent-primary;
+}
+.combo-box .list-cell { -fx-background-color: -bg-surface; -fx-text-fill: -text-primary; }
+.combo-box-popup .list-view { -fx-background-color: -bg-surface; -fx-border-color: -border-soft; }
+.label { -fx-text-fill: -text-primary; }
+
+/* ---------------- Welcome / Login screens ---------------- */
+.welcome-pane {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B);
+}
+.welcome-logo {
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+.welcome-tagline {
+    -fx-font-size: 18px;
+    -fx-text-fill: -text-secondary;
+}
+.welcome-illustration {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 24;
+    -fx-border-color: -border-soft;
+    -fx-border-radius: 24;
+    -fx-border-width: 1;
+    -fx-min-width: 360;
+    -fx-min-height: 240;
+}
+.login-card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 16;
+    -fx-padding: 32;
+    -fx-spacing: 14;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-max-width: 380;
+}
+
+/* ---------------- Deep Work full-screen mode ---------------- */
+.deep-work-pane {
+    -fx-background-color: radial-gradient(center 50% 30%, radius 80%, #1E293B, #0F172A);
+}
+.deep-work-timer {
+    -fx-font-size: 84px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+.deep-work-context {
+    -fx-font-size: 16px;
+    -fx-text-fill: -text-secondary;
+}
+
+/* ---------------- Empty state ---------------- */
+.empty-state {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-padding: 32;
+    -fx-spacing: 8;
+    -fx-alignment: CENTER;
+    -fx-border-color: -border-soft;
+    -fx-border-style: dashed;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+}
+.empty-state-title  { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.empty-state-hint   { -fx-font-size: 12px; -fx-text-fill: -text-secondary; }
+
+/* ---------------- Notification toast ---------------- */
+.toast {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 10;
+    -fx-padding: 12 18 12 18;
+    -fx-border-color: -accent-primary;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-text-fill: -text-primary;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 14, 0, 0, 4);
+}
+.toast-success { -fx-border-color: -accent-success; }
+.toast-warning { -fx-border-color: -accent-warning; }
+.toast-danger  { -fx-border-color: -accent-danger;  }
+
+/* ---------------- Scroll pane polish ---------------- */
+.scroll-pane { -fx-background-color: transparent; }
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+.scroll-pane .scroll-bar:vertical .thumb,
+.scroll-pane .scroll-bar:horizontal .thumb { -fx-background-color: -bg-card; -fx-background-radius: 4; }
+
+/* ---------------- Misc ---------------- */
+.divider { -fx-background-color: -border-soft; -fx-pref-height: 1; }
+.dot { -fx-background-radius: 10; -fx-min-width: 8; -fx-min-height: 8; -fx-max-width: 8; -fx-max-height: 8; }
+.dot-success { -fx-background-color: -accent-success; }
+.dot-warning { -fx-background-color: -accent-warning; }
+.dot-danger  { -fx-background-color: -accent-danger;  }
+.dot-intel   { -fx-background-color: -accent-intel;   }
+.dot-primary { -fx-background-color: -accent-primary; }
+
+/* ---------------- Entry screens: split-panel (Welcome / Login / Signup) ---- */
+.brand-panel {
+    -fx-padding: 64 56 64 72;
+    -fx-background-color: linear-gradient(to bottom right, #111C33, #0B1220);
+    -fx-border-color: transparent -border-soft transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+.action-panel {
+    -fx-padding: 64 72 64 56;
+}
+.brand-mark-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+.brand-mark-name-lg {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+.welcome-tagline-lg {
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-primary;
+}
+.welcome-bullet-dot  { -fx-text-fill: -accent-primary; -fx-font-size: 18px; -fx-font-weight: bold; }
+.welcome-bullet-text { -fx-text-fill: -text-secondary; -fx-font-size: 14px; }
+
+.auth-card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 16;
+    -fx-padding: 32;
+    -fx-spacing: 14;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 16;
+    -fx-min-width: 360;
+    -fx-max-width: 420;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 18, 0, 0, 6);
+}
+.auth-link {
+    -fx-text-fill: -accent-primary;
+    -fx-border-color: transparent;
+    -fx-padding: 2 0 2 0;
+}
+.auth-link:hover { -fx-underline: true; }
+.offline-note {
+    -fx-text-fill: -accent-warning;
+    -fx-font-size: 12px;
+    -fx-padding: 10 0 0 0;
+}
+
+/* Inline form validation message */
+.auth-error {
+    -fx-text-fill: -accent-danger;
+    -fx-font-size: 12px;
+}
+
+/* Live password-strength meter */
+.password-strength { -fx-font-size: 12px; }
+.strength-weak   { -fx-text-fill: -accent-danger;  }
+.strength-fair   { -fx-text-fill: -accent-warning; }
+.strength-strong { -fx-text-fill: -accent-success; }
+
+/* Guest-mode indicator in the top bar */
+.guest-chip {
+    -fx-font-size: 12px;
+    -fx-text-fill: -accent-warning;
+    -fx-padding: 4 10 4 10;
+    -fx-background-color: derive(-accent-warning, -70%);
+    -fx-background-radius: 12;
+}
+
+/* =============================================================================
+ * Phase 1.2 — UX, contrast, scrolling, honesty
+ * ========================================================================== */
+
+/* --- TextArea readability in dark mode (the inner .content was unstyled) --- */
+.text-area { -fx-text-fill: -text-primary; }
+.text-area .content { -fx-background-color: -bg-surface; -fx-background-radius: 8; }
+.text-area:focused .content { -fx-background-color: -bg-surface; }
+.text-area .scroll-pane,
+.text-area .scroll-pane .viewport { -fx-background-color: transparent; }
+.text-area .text { -fx-fill: -text-primary; }
+
+/* --- Scrollbars: slim, calm, visible on dark (applies platform-wide) --- */
+.scroll-pane { -fx-background-color: transparent; -fx-background-insets: 0; }
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+.scroll-bar:vertical, .scroll-bar:horizontal { -fx-background-color: transparent; }
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 6;
+}
+.scroll-bar:vertical .thumb:hover,
+.scroll-bar:horizontal .thumb:hover { -fx-background-color: -bg-card-hover; }
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent; -fx-padding: 0 4 0 4;
+}
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-background-color: transparent; -fx-shape: "";
+}
+
+/* --- Sidebar scroll wrapper keeps the rail colour --- */
+.sidebar-scroll, .sidebar-scroll > .viewport { -fx-background-color: -bg-surface; }
+
+/* --- Subtle card hover for a more premium feel --- */
+.card:hover { -fx-border-color: derive(-border-soft, 20%); }
+.card-elevated:hover { -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 12, 0, 0, 4); }
+
+/* --- Honest "preview / sample data" chip --- */
+.preview-badge {
+    -fx-font-size: 11px;
+    -fx-text-fill: -accent-intel;
+    -fx-padding: 3 10 3 10;
+    -fx-background-color: derive(-accent-intel, -55%);
+    -fx-background-radius: 10;
+    -fx-border-color: -accent-intel;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+/* --- Deep Work presets + summary --- */
+.deep-work-preset {
+    -fx-background-color: -bg-card;
+    -fx-text-fill: -text-secondary;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+.deep-work-preset-active {
+    -fx-background-color: -accent-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+.deep-work-summary {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-padding: 20;
+    -fx-spacing: 8;
+}
+
+/* --- Leaderboard (EA-Sports-inspired) --- */
+.leader-card {
+    -fx-background-color: linear-gradient(to right, #1E293B, #243049);
+    -fx-background-radius: 14;
+    -fx-padding: 18 22 18 22;
+    -fx-border-color: -border-soft;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+}
+.leader-card-you { -fx-border-color: -accent-primary; -fx-border-width: 2; }
+.leader-rank { -fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: -text-primary; -fx-min-width: 56; }
+.leader-name { -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.leader-stat-value { -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.leader-stat-label { -fx-font-size: 10px; -fx-text-fill: -text-muted; }
+.leader-division {
+    -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -accent-intel;
+    -fx-padding: 3 10 3 10; -fx-background-color: derive(-accent-intel, -55%); -fx-background-radius: 10;
+}
+.move-up   { -fx-text-fill: -accent-success; -fx-font-weight: bold; }
+.move-down { -fx-text-fill: -accent-danger;  -fx-font-weight: bold; }
+.move-same { -fx-text-fill: -text-muted; }
+
+/* =============================================================================
+ * DESIGN SYSTEM v1 — premium Productivity Intelligence look
+ * (appended last so it refines earlier rules)
+ * ========================================================================== */
+
+.content-area { -fx-padding: 28 32 32 32; }
+
+/* Cards: deeper surface, softer radius, gentle elevation + hover lift */
+.card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 2);
+}
+.card:hover { -fx-border-color: derive(-accent-primary, -40%); }
+.card-elevated {
+    -fx-background-color: -bg-card;
+    -fx-background-radius: 14;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.30), 12, 0, 0, 3);
+}
+
+/* Buttons: calmer, rounded, subtle hover */
+.btn { -fx-background-radius: 10; -fx-padding: 9 18 9 18; -fx-font-size: 13px; }
+.btn-primary {
+    -fx-background-color: -accent-primary;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.35), 10, 0, 0, 2);
+}
+.btn-primary:hover { -fx-background-color: derive(-accent-primary, 8%); }
+.btn-ghost { -fx-background-radius: 10; -fx-border-radius: 10; }
+
+/* Inputs: clear focus glow */
+.text-field, .password-field, .text-area, .combo-box-base, .date-picker > .text-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 10 12 10 12;
+}
+.text-field:focused, .password-field:focused, .text-area:focused, .combo-box-base:focused {
+    -fx-border-color: -accent-primary;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.25), 8, 0, 0, 0);
+}
+
+/* Sidebar density + grouping */
+.sidebar { -fx-pref-width: 232; -fx-padding: 22 12 22 12; -fx-spacing: 4; }
+.sidebar-section-label {
+    -fx-font-size: 10px; -fx-font-weight: bold;
+    -fx-text-fill: -text-muted; -fx-padding: 18 0 4 10;
+}
+.sidebar-item { -fx-padding: 9 12 9 12; -fx-background-radius: 10; -fx-font-size: 13px; }
+.sidebar-item-active {
+    -fx-background-color: derive(-accent-primary, -60%);
+    -fx-text-fill: -accent-primary;
+    -fx-font-weight: bold;
+}
+
+/* "Today's Focus" hero — the one best next action */
+.focus-hero {
+    -fx-background-color: linear-gradient(to bottom right, #11203D, #0B1530);
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-border-color: derive(-accent-primary, -35%);
+    -fx-border-width: 1;
+    -fx-padding: 26;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.18), 22, 0, 0, 6);
+}
+.focus-eyebrow { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -accent-primary; }
+.focus-title   { -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.focus-reason  { -fx-font-size: 14px; -fx-text-fill: -text-secondary; }
+.focus-meta-chip {
+    -fx-font-size: 11px; -fx-text-fill: -text-secondary;
+    -fx-background-color: rgba(148,163,184,0.12); -fx-background-radius: 8; -fx-padding: 4 10 4 10;
+}
+
+/* Compact, secondary KPI tiles */
+.kpi-compact {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-padding: 12 14 12 14;
+    -fx-spacing: 2;
+    -fx-min-width: 150;
+}
+.kpi-compact:hover { -fx-border-color: derive(-accent-primary, -40%); }
+.kpi-compact-value { -fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: -text-primary; }
+.kpi-compact-label { -fx-font-size: 11px; -fx-text-fill: -text-muted; }
+
+/* AI Coach decision-assistant sections */
+.coach-section-label { -fx-font-size: 11px; -fx-font-weight: bold; -fx-text-fill: -accent-intel; -fx-padding: 4 0 2 0; }
+.coach-why-line { -fx-font-size: 13px; -fx-text-fill: -text-secondary; }
+
+/* Progressive disclosure link */
+.disclosure-link { -fx-text-fill: -accent-primary; -fx-border-color: transparent; -fx-padding: 4 0 4 0; }
+.disclosure-link:hover { -fx-underline: true; }
+
+/* =============================================================================
+ * LIGHT THEME — token overrides applied when the scene root has .theme-light.
+ * Token-based, so components flip automatically. Accents are kept.
+ * ========================================================================== */
+.theme-light {
+    -bg-base:        #F8FAFC;
+    -bg-surface:     #FFFFFF;
+    -bg-card:        #F1F5F9;
+    -bg-card-hover:  #E2E8F0;
+    -text-primary:   #0F172A;
+    -text-secondary: #475569;
+    -text-muted:     #64748B;
+    -border-soft:    #CBD5E1;
+}
+.theme-light .deep-work-pane {
+    -fx-background-color: radial-gradient(center 50% 30%, radius 80%, #FFFFFF, #E2E8F0);
+}
+.theme-light .deep-work-timer { -fx-text-fill: #0F172A; }
+.theme-light .focus-hero {
+    -fx-background-color: linear-gradient(to bottom right, #EAF1FF, #DCE7FF);
+    -fx-border-color: derive(-accent-primary, 20%);
+}
+.theme-light .welcome-pane {
+    -fx-background-color: linear-gradient(to bottom right, #F8FAFC, #E2E8F0);
+}
+
+/* Deep Work top control bar */
+.deep-work-topbar { -fx-padding: 14 18 14 18; -fx-spacing: 10; }
+.deep-work-card {
+    -fx-background-color: -bg-surface;
+    -fx-background-radius: 12;
+    -fx-border-color: -border-soft;
+    -fx-border-width: 1;
+    -fx-border-radius: 12;
+    -fx-padding: 16;
+    -fx-spacing: 6;
+    -fx-min-width: 320;
+}
